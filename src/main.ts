@@ -1,0 +1,41 @@
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
+import { AppModule } from './app/app.module';
+import helmet from 'helmet';
+import * as compression from 'compression';
+import * as cookieParser from 'cookie-parser';
+import { HttpExceptionFilter } from './shared/exceptions/http.exception';
+import { HttpResponseInterceptor } from './shared/interceptors/http-response.interceptor';
+import { ValidationPipe } from './shared/pipes/validation.pipe';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+
+async function bootstrap() {
+  
+  const app = await NestFactory.create(AppModule);
+
+  app.use(helmet()); 
+  app.enableCors();
+  app.use(compression());
+  app.use(cookieParser());
+  app.useGlobalInterceptors(new HttpResponseInterceptor());
+  app.useGlobalPipes(new ValidationPipe());
+  
+  const { httpAdapter } = app.get(HttpAdapterHost);
+  app.useGlobalFilters(new HttpExceptionFilter(httpAdapter));
+
+  const port = parseInt(String(process.env.PORT)) || 3000;
+
+  const config = new DocumentBuilder()
+  .setTitle('Healthcare')
+  .setDescription('A healthcare app backend')
+  .setVersion('1.0')
+  .build();
+  
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+
+  await app.listen(port, '0.0.0.0');
+}
+bootstrap();
+
+
+
