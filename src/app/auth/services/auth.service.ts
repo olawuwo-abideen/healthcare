@@ -61,7 +61,9 @@ import {
       user = await this.entityManager.transaction(async (manager) => {
         return await manager.save(User, user);
       });
-      return user;
+      return {
+        message: "User signup sucessfully",
+        user};
     }
   
     public async login({ email, password }: LoginDto) {
@@ -70,6 +72,7 @@ import {
         throw new UnauthorizedException('Email or password is incorrect');
       }
       return {
+        message: "User login sucessfully",
         token: this.createAccessToken(user),
         user,
       };
@@ -78,7 +81,7 @@ import {
       return this.jwtService.sign({ sub: user.id });
     }
     
-    async forgotPassword(email: string): Promise<void> {
+    async forgotPassword(email: string): Promise<{message:string}> {
       const user: User | null = await this.userService.findOne({ email });
   
       if (!user) {
@@ -87,8 +90,8 @@ import {
   
       const payload = { email: user.email };
       const token = this.jwtService.sign(payload, {
-        secret: this.configService.get('JWT_SECRET'),
-        expiresIn: `${this.configService.get('JWT_RESET_PASSWORD_EXPIRATION_TIME')}`,
+        secret: this.configService.get<string>('JWT_SECRET'),
+        expiresIn: `${this.configService.get<string>('JWT_EXPIRES_IN')}`,
       });
   
       user.resetToken = token;
@@ -103,6 +106,7 @@ import {
       );
   
       await this.emailService.sendResetPasswordLink(user);
+      return { message: 'Reset token sent to user email' };
     }
   
     public async decodeConfirmationToken(token: string) {
@@ -120,7 +124,7 @@ import {
       }
     }
   
-    async resetPassword(payload: ResetPasswordDto): Promise<void> {
+    async resetPassword(payload: ResetPasswordDto): Promise<{message:string}> {
       const email = await this.decodeConfirmationToken(payload.token);
   
       const user: User | null = await this.userService.findOne({
@@ -138,6 +142,7 @@ import {
         { id: user.id },
         { password, resetToken: null },
       );
+      return { message: 'Password reset successfully' };
     }
   
   

@@ -25,20 +25,13 @@ export class HttpResponseInterceptor implements NestInterceptor {
           getResponse.statusCode === 201 &&
           context.switchToHttp().getRequest().method === 'POST'
         ) {
-          getResponse.status(200);
+          getResponse.status(200); // Modify status code to 200 OK
         }
-
-        
-        const message =
-          data?.message && typeof data.message === 'string'
-            ? data.message
-            : 'Successful';
 
         return {
           status: true,
           code: getResponse.statusCode,
-          message: message,
-          data: data?.data ?? data,
+          ...data, 
         };
       }),
       catchError((error) => {

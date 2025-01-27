@@ -7,9 +7,9 @@ Installation
 
 `git clone git@github.com:olawuwo-abideen/healthcare.git`
 
-npm i @types/express @nestjs/platform-express multer @types/multer cloudinary --legacy-peer-deps
 
-npm install @nestjs-modules/mailer nodemailer @types/nodemailer --legacy-peer-deps
+
+npm i bcryptjs --legacy-peer-deps
 
 
 
@@ -28,23 +28,15 @@ Open a terminal and enter the following command to install all the  modules need
 
 Create a `.env` file with
 
-`DB_HOST=localhost`
-
-`DB_PORT=3306`
-
-`DB_USERNAME=root`
-
-`DB_PASSWORD=password`
-
-`DB_NAME=datingapp`
-
+`POSTGRES_HOST=127.0.0.1`
+`POSTGRES_PORT=5432`
+`POSTGRES_USER=postgres`
+`POSTGRES_PASSWORD=password`
+`POSTGRES_DATABASE=healthcare`
 `PORT=3000`
-
 `JWT_SECRET=secret`
-
-`JWT_EXPIRATION_TIME=216000`
-
-`JWT_RESET_PASSWORD_EXPIRATION_TIME=30000`
+`JWT_EXPIRATION_TIME=90d`
+`NODE_ENV="dev'`
 
 
 Enter the following `npm start` command to Command Line Interface to Start the app
@@ -65,11 +57,12 @@ The following API endpoints are available:
 - **GET /admin/users**: Get all users.
 - **GET /admin/users/patients**: Get list of all patients.
 - **GET /admin/users/patient/:id**: Get specific patient details.
-- **GET /admin/dashboard/overview**: Delete a user.
-- **PUT /admin/activate/{userId}**: Get list of all patients.
-- **PUT /admin/deactivate/{userId}**: Get specific patient details.
-- **GET /admin/payments**: Delete a user.
-- **GET /admin/appointments/all**: Get all users.
+- **GET /admin/dashboard/overview**: Get overall system statistics.
+- **PUT /admin/activate/:id**: Activate a user account.
+- **PUT /admin/deactivate/:id**: Deactivate a user account.
+- **GET /admin/deactivate/**: Get all deactivated account.
+- **GET /admin/delete/:id**: Delete a user.
+- **GET /admin/appointments/all**: 	Get all appointments.
 
 
 **Authentication Endpoint**
@@ -92,40 +85,37 @@ The following API endpoints are available:
 
 - **POST /availability/set/**: Set availability slots (Doctor only).
 - **POST /availability/get/:id**: Get doctor availability.
-- **PUT /availability/update/{availabilityId}**: Update availability slot.
-- **DELETE /availability/remove/{availabilityId}**: Remove availability slot.
+- **PUT /availability/update/:id**: Update availability slot.
+- **DELETE /availability/remove/:id**: Remove availability slot.
 
 **Appointments Endpoint**
 
 - **POST /appointments/book/**: Book an appointment.
-- **GET /appointments/patient/{patientId}**: Get all appointments of a patient.
-- **GET /appointments/doctor/{doctorId}**: Get all appointments of a doctor.
-- **GET /appointments/details/{appointmentId}**: Get details of a specific appointment.
-- **PUT /appointments/reschedule/{appointmentId}**:	Reschedule an appointment.
-- **DELETE /appointments/cancel/{appointmentId}**: Cancel an appointment.
+- **GET /appointments/patient/:id**: Get all appointments of a patient.
+- **GET /appointments/doctor/:id**: Get all appointments of a doctor.
+- **GET /appointments/details/:id**: Get details of a specific appointment.
+- **PUT /appointments/reschedule/:id**:	Reschedule an appointment.
+- **DELETE /appointments/cancel/:id**: Cancel an appointment.
 
 
 **Medical Records Management Endpoints**
 
 - **POST /medical-records/upload**: Upload a medical record (PDF, images, etc.).
 - **GET /medical-records/list/:id**: Get medical records for a patient.
-- **GET /medical-records/view/{recordId}**: View a specific medical record.
-- **DELETE /medical-records/delete/{recordId}**: Delete a medical record.
-
+- **GET /medical-records/view/:id**: View a specific medical record.
 
 **Prescription Management Endpoints**
 
 - **POST /create/discover**: Add a new prescription.
-- **GET /patient/{patientId}**: Get prescriptions for a patient.
-- **GET /doctor/{doctorId}**: Get prescriptions written by a doctor.
-- **PUT /update/{prescriptionId}**: Update an existing prescription.
-- **DELETE /delete/{prescriptionId}**: Delete a prescription.
+- **GET /patient/:id**: Get prescriptions for a patient.
+- **PUT /update/:id**: Update an existing prescription.
+- **DELETE /delete/:id**: Delete a prescription.
 
 
 
 **Reviews & Ratings Endpoints**
 
-- **POST /reviews/add**: Add a review for a doctor.
-- **GET /reviews/doctor/{doctorId}**: Get reviews for a doctor.
-- **PUT /reviews/update/{reviewId}**: Update an existing review.
-- **DELETE /reviews/delete/{reviewId}**: Delete a review.
+- **POST /reviews/docytor/:id**: Add a review for a doctor.
+- **GET /reviews/doctor/:id**: Get reviews for a doctor.
+- **PUT /reviews/update/:id**: Update an existing review.
+- **DELETE /reviews/delete/:id**: Delete a review.

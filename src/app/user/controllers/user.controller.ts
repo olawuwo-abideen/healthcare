@@ -20,8 +20,8 @@ import {
   import { IsValidUUIDPipe } from 'src/shared/pipes/is-valid-uuid.pipe';
   import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
   
-  @ApiTags('user')
-  @Controller('users')
+  @ApiTags('User')
+  @Controller('user')
   export class UserController {
     constructor(private readonly userService: UserService) {}
   

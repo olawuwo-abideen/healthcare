@@ -1,4 +1,4 @@
 import { Controller } from '@nestjs/common';
 
-@Controller('record')
+@Controller('medical-records')
 export class RecordController {}

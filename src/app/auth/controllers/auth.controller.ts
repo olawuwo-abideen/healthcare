@@ -10,7 +10,7 @@ import { User } from 'src/shared/entities/user.entity';
 import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
 
 
-@ApiTags('auth')
+@ApiTags('Auth')
 @Controller('auth')
 @Public()
 export class AuthController {
@@ -71,7 +71,7 @@ export class AuthController {
   }
 
 
-  @Post('sign-out')
+  @Post('signout')
   @ApiOperation({ summary: 'User Log-Out' })
   @ApiResponse({
     status: HttpStatus.OK,

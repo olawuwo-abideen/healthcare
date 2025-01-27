@@ -52,7 +52,7 @@ export class UserService {
   public async changePassword(
     data: ChangePasswordDto,
     user: User,
-  ): Promise<null> {
+  ): Promise<{message:string}> {
 
     if (!user.password) {
       const foundUser = await this.userRepository.findOne({
@@ -90,7 +90,7 @@ export class UserService {
       { password: hashedNewPassword },
     );
   
-    return null;
+    return {message:"Password update successfully"};
   }
   
   
