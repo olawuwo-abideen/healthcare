@@ -5,7 +5,7 @@ import {
   Repository,
   UpdateResult,
 } from 'typeorm';
-import { User } from 'src/shared/entities/user.entity';
+import { User, UserRole } from 'src/shared/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcryptjs from 'bcryptjs';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
@@ -90,38 +90,46 @@ export class UserService {
       { password: hashedNewPassword },
     );
   
-    return {message:"Password update successfully"};
+    return {message:"Password updated successfully"};
   }
   
   
   public async updateProfile(
     data: UpdateProfileDto,
     user: User,
-  ): Promise<User> {
+  ): Promise<{ message: string; user: User }> {
     const dataToUpdate: Partial<User> = {
       firstname: data.firstname,
       lastname: data.lastname,
       age: data.age,
       phonenumber: data.phonenumber,
-      gender:data.gender,
-
+      gender: data.gender,
     };
+  
+    if (user.role === UserRole.DOCTOR) {
+      Object.assign(dataToUpdate, {
+        specialization: data.specialization,
+        experienceYears: data.experienceyears,
+      });
+    }
   
     Object.assign(user, dataToUpdate);
   
     await this.userRepository.save(user);
   
-    return user;
+    return {
+      message: 'Profile updated successfully',
+      user,
+    };
   }
-
   
   
-  public async updateProfileImage(
-    profileimage: Express.Multer.File,
+  public async updateUserImage(
+    userimage: Express.Multer.File,
     user: User,
   ): Promise<User> {
-    if (profileimage) {
-      const uploadHeaderImage = await this.cloudinaryService.uploadFile(profileimage);
+    if (userimage) {
+      const uploadHeaderImage = await this.cloudinaryService.uploadFile(userimage);
       user.userimage= uploadHeaderImage.secure_url;
     }
 

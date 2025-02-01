@@ -68,7 +68,7 @@ import {
   
   
   
-    @Put('profile-image')
+    @Put('user-image')
       @ApiOperation({ summary: 'User Update profile image ' })
       @ApiBody({description: 'User update profile image' })
       @ApiResponse({
@@ -77,11 +77,11 @@ import {
           'Image update successfully.',
       })
     @UseInterceptors(FileInterceptor('profileimage'))
-    public async updateProfileImage(
-      @UploadedFile() profileimage: Express.Multer.File,
+    public async updateUserImage(
+      @UploadedFile() userimage: Express.Multer.File,
       @CurrentUser() user: User,
     ) {
-      return await this.userService.updateProfileImage(profileimage, user);
+      return await this.userService.updateUserImage(userimage, user);
     }
   
   

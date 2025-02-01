@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
-import { Gender } from 'src/shared/entities/user.entity';
+import { Gender, DoctorSpecilization } from 'src/shared/entities/user.entity';
 
 
 export class UpdateProfileDto {
@@ -42,5 +42,22 @@ export class UpdateProfileDto {
  gender: Gender;
 
 
+ @ApiProperty({
+  description: 'The doctor area of specilization',
+  enum: DoctorSpecilization,
+  example: 'cardiology',
+})
+// @IsNotEmpty()
+specialization: DoctorSpecilization;
+
+@ApiProperty({
+  description: 'The doctor years of experience',
+  example: '3',
+})
+// @IsNotEmpty()
+experienceyears: number;
+
+
 }
+
 

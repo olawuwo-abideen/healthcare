@@ -58,9 +58,6 @@ The following API endpoints are available:
 - **GET /admin/users/patients**: Get list of all patients.
 - **GET /admin/users/patient/:id**: Get specific patient details.
 - **GET /admin/dashboard/overview**: Get overall system statistics.
-- **PUT /admin/activate/:id**: Activate a user account.
-- **PUT /admin/deactivate/:id**: Deactivate a user account.
-- **GET /admin/deactivate/**: Get all deactivated account.
 - **GET /admin/delete/:id**: Delete a user.
 - **GET /admin/appointments/all**: 	Get all appointments.
 
@@ -115,7 +112,7 @@ The following API endpoints are available:
 
 **Reviews & Ratings Endpoints**
 
-- **POST /reviews/docytor/:id**: Add a review for a doctor.
+- **POST /reviews/doctor/:id**: Add a review for a doctor.
 - **GET /reviews/doctor/:id**: Get reviews for a doctor.
 - **PUT /reviews/update/:id**: Update an existing review.
 - **DELETE /reviews/delete/:id**: Delete a review.
