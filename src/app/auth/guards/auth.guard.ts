@@ -3,14 +3,17 @@ import {
   ExecutionContext,
   Injectable,
   UnauthorizedException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { IncomingMessage } from 'http';
 import { Reflector } from '@nestjs/core';
 import { UserService } from '../../user/services/user.service';
-import { User } from '../../../shared/entities/user.entity';
+import { User, UserRole } from '../../../shared/entities/user.entity';
 import { IS_PUBLIC_KEY } from '../../../shared/decorators/public.decorator';
+import { ROLES_KEY } from '../../../shared/decorators/roles.decorator';
+
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -22,68 +25,85 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    // Get isPublic decorator
+    // Check if the route is public
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(),
       context.getClass(),
     ]);
 
-    // Allow access if isPublic is true
     if (isPublic) {
       return true;
     }
 
     const request = this.getRequest<IncomingMessage & { user?: User }>(context);
-    const url = request.url;
 
     try {
-      // get token
-      const token = this.getToken(request);
-
-      // verify token
-      const payload = await this.jwtService.verifyAsync(token, {
-        secret: this.configService.get<string>('JWT_SECRET'),
-      });
-
-      // get user id
-      const userId = payload.sub;
-
-      // get user by id
-      const user: User | null = await this.userService.findOne({ id: userId });
-
-      // return exception if unable to get user
-      if (!user) throw Error();
-
-      user.password = '';
-
+      // Authenticate the user
+      const user = await this.authenticateUser(request);
       request.user = user;
 
-      return true;
-    } catch (e) {
-      throw new UnauthorizedException();
+      // Authorize the user (Role-based access control)
+      return this.authorizeUser(user, context);
+    } catch (error) {
+      throw error;
     }
   }
 
-  protected getRequest<T>(context: ExecutionContext): T {
+  /**
+   * Extracts and verifies the JWT, then fetches the user from the database.
+   */
+  private async authenticateUser(
+    request: IncomingMessage & { user?: User },
+  ): Promise<User> {
+    const token = this.getToken(request);
+    const payload = await this.jwtService.verifyAsync(token, {
+      secret: this.configService.get<string>('JWT_SECRET'),
+    });
+
+    const userId = payload.sub;
+    const user: User | null = await this.userService.findOne({ id: userId });
+
+    if (!user) throw new UnauthorizedException('Invalid token: User not found');
+
+    user.password = '';
+    return user;
+  }
+
+  /**
+   * Checks if the user has the required roles to access the route.
+   */
+  private authorizeUser(user: User, context: ExecutionContext): boolean {
+    const requiredRoles = this.reflector.getAllAndOverride<UserRole[]>(ROLES_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+
+    if (!requiredRoles) {
+      return true; // No roles required, allow access
+    }
+
+    const hasRole = requiredRoles.some((role) =>
+      user.role?.includes(role),
+    );
+
+    if (!hasRole) {
+      throw new ForbiddenException('Access denied: Insufficient permissions');
+    }
+
+    return true;
+  }
+
+  private getRequest<T>(context: ExecutionContext): T {
     return context.switchToHttp().getRequest();
   }
 
-  protected getToken(
-    request: IncomingMessage & { user?: User | undefined },
-  ): string {
-    // get auth header
+  private getToken(request: IncomingMessage & { user?: User }): string {
     const authorization = request.headers['authorization'];
 
-    // check if auth header is valid
-    if (
-      !authorization ||
-      authorization.trim() === '' ||
-      Array.isArray(authorization)
-    ) {
-      throw new UnauthorizedException();
+    if (!authorization || authorization.trim() === '' || Array.isArray(authorization)) {
+      throw new UnauthorizedException('Missing or invalid Authorization header');
     }
 
-    // get token from header
     const [_, token] = authorization.split(' ');
     return token;
   }

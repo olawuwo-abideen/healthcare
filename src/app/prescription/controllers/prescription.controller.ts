@@ -24,6 +24,10 @@ private readonly prescriptionService:PrescriptionService
     description:
       'Prescription created successfully.',
   })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Patient not found.',
+  })
 public async createPrescription(
 @CurrentUser() user: User,
 @Param('id', IsValidUUIDPipe) patientId: string,
@@ -37,9 +41,14 @@ return await this.prescriptionService.createPrescription(user, patientId, data);
   @ApiResponse({ 
     status: HttpStatus.OK, 
     description: 'Prescription retrieved successfully' })
+    @ApiResponse({
+      status: HttpStatus.NOT_FOUND,
+      description: 'Patient not found.',
+    })
   public async getPrescription(
+    @CurrentUser() user: User,
     @Param('id', IsValidUUIDPipe) patientId: string) {
-    return this.prescriptionService.getPrescription(patientId);
+    return this.prescriptionService.getPrescription(user, patientId);
   }
 
   @Put('patient/:id')
@@ -47,6 +56,10 @@ return await this.prescriptionService.createPrescription(user, patientId, data);
   @ApiResponse({ 
     status: HttpStatus.OK, 
     description: 'Prescription updated successfully' })
+    @ApiResponse({
+      status: HttpStatus.NOT_FOUND,
+      description: 'Prescription not found.',
+    })
   public async updatePrescription(
     @CurrentUser() user: User,
     @Param('id', IsValidUUIDPipe) prescriptionId: string,

@@ -1,4 +1,4 @@
-import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from 'src/shared/entities/user.entity';
@@ -15,12 +15,13 @@ export class ReviewService {
     private readonly userRepository: Repository<User>,
   ) {}
 
+  
   public async createReview(
     user: User,
     doctorId: string,
     data: CreateReviewDto,
   ): Promise<any> {
-
+  
     const doctor: User | null = await this.userRepository.findOne({
       where: { id: doctorId },
     });
@@ -28,40 +29,60 @@ export class ReviewService {
     if (!doctor) {
       throw new NotFoundException('Doctor not found');
     }
-    const reviewData = {
-      userId: user.id,
-      doctorId: doctorId,
+  
+    if (doctor.role !== 'doctor') {
+      throw new BadRequestException('The specified user is not a doctor');
+    }
+  
+    const reviewData = this.reviewRepository.create({
+      user: { id: user.id },
+      doctor: { id: doctorId },
       rating: data.rating,
       comment: data.comment,
-    };
+    });
   
-
-  const savedReview = await this.reviewRepository.save(reviewData);
+    const savedReview = await this.reviewRepository.save(reviewData);
   
     return {
       message: 'Review submitted successfully',
-      data: savedReview
+      data: {
+        reviewId: savedReview.id,
+        userId: savedReview.user.id, 
+        rating: savedReview.rating,
+        comment: savedReview.comment,
+        doctorId: doctorId,
+      }
     };
   }
   
   
-
   public async getReviewByDoctorId(
-    
-    doctorId: string): Promise<{message: string; data:Review[]}> {
+    user: User,
+    doctorId: string
+  ): Promise<{  message: string; data: any[] }> {
+  
     const reviews = await this.reviewRepository.find({
-      where: { id:doctorId },
-      relations: ['user'],
+      where: { doctor: { id: doctorId } },
+      relations: ['user'], 
     });
-
-    if (!reviews.length) {
+  
+    if (!reviews || reviews.length === 0) {
       throw new NotFoundException('No reviews found for this doctor');
     }
-
     return {
-      message:"Review Retrieved Sucessfully",
-      data:reviews};
+      message: 'Reviews retrieved successfully',
+      data: reviews.map(review => ({
+        id: review.id,
+        userId: review.user.id,
+        rating: review.rating,
+        comment: review.comment,
+        doctorId: doctorId, 
+        createdAt: review.createdAt,
+        updatedAt: review.updatedAt,
+      })),
+    };
   }
+  
 
   public async updateReview(user: User, reviewId: string, data: UpdateReviewDto): Promise<any> {
     const review = await this.reviewRepository.findOne({
@@ -80,6 +101,7 @@ export class ReviewService {
 
     return {
       message: 'Review updated successfully',
+      review
     };
   }
 

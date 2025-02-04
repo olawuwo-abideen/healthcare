@@ -1,4 +1,4 @@
-import {  Injectable, NotFoundException } from '@nestjs/common';
+import {  BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from 'src/shared/entities/user.entity';
@@ -33,6 +33,10 @@ public async createMedicalRecord(
     if (!patient) {
       throw new NotFoundException('Patient not found');
     }
+
+    if (patient.role !== 'patient') {
+    throw new BadRequestException('The specified user is not a patient');
+    }
   
   
     let uploadedFileUrl: string | null = null;
@@ -43,8 +47,8 @@ public async createMedicalRecord(
   
 
     const medicalRecordData = {
-      userId: user.id,
-      patientId: patientId,
+      user: { id: user.id },
+      patient: { id: patientId },
       description: data.description,
       fileUrl: uploadedFileUrl, 
     };
@@ -61,19 +65,28 @@ public async createMedicalRecord(
 
 
 public async getMedicalRecord(
-patientId: string): Promise<{message: string; data:MedicalRecord[]}> {
-const medicalrecord = await this.medicalRecordRepository.find({
-where: { id:patientId },
+patientId: string): Promise<{message: string; data:any[]}> {
+const medicalrecords = await this.medicalRecordRepository.find({
+  where: { patient: { id: patientId } },
 relations: ['user'],
 });
 
-if (!medicalrecord.length) {
+if (!medicalrecords|| medicalrecords.length === 0) {
 throw new NotFoundException('No Medical Record found for this patient');
 }
 
 return {
 message:" Medical Record Retrieved Sucessfully",
-data:medicalrecord};
+data: medicalrecords.map(medicalrecord => ({
+  id: medicalrecord.id,
+  userId: medicalrecord.user.id,
+  description: medicalrecord.description,
+  uploadedfiles: medicalrecord.uploadedfiles,
+  patientId: patientId, 
+  createdAt: medicalrecord.createdAt,
+  updatedAt: medicalrecord.updatedAt,
+})),
+}
 }
 
 public async updateMedicalRecord(

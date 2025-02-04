@@ -23,6 +23,10 @@ private readonly reviewService:ReviewService
     description:
       'Review created successfully.',
   })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Doctor not found.',
+  })
 public async createReview(
 @CurrentUser() user: User,
 @Param('id', IsValidUUIDPipe) doctorId: string,
@@ -36,16 +40,25 @@ return await this.reviewService.createReview(user, doctorId, data);
   @ApiResponse({ 
     status: HttpStatus.OK, 
     description: 'Reviews retrieved successfully' })
+    @ApiResponse({
+      status: HttpStatus.NOT_FOUND,
+      description: 'Review not found.',
+    })
   public async getReviewByDoctorId(
+    @CurrentUser() user: User,
     @Param('id', IsValidUUIDPipe) doctorId: string) {
-    return this.reviewService.getReviewByDoctorId(doctorId);
+    return this.reviewService.getReviewByDoctorId(user, doctorId);
   }
 
-  @Put('doctor/:id')
+  @Put(':id')
   @ApiOperation({ summary: 'Update a review' })
   @ApiResponse({ 
     status: HttpStatus.OK, 
     description: 'Review updated successfully' })
+    @ApiResponse({
+      status: HttpStatus.NOT_FOUND,
+      description: 'Review not found.',
+    })
   public async updateReview(
     @CurrentUser() user: User,
     @Param('id', IsValidUUIDPipe) reviewId: string,
@@ -54,11 +67,15 @@ return await this.reviewService.createReview(user, doctorId, data);
     return this.reviewService.updateReview(user, reviewId, data);
   }
 
-  @Delete('doctor/:id')
+  @Delete(':id')
   @ApiOperation({ summary: 'Delete a review' })
   @ApiResponse({ 
     status: HttpStatus.OK, 
     description: 'Review deleted successfully' })
+    @ApiResponse({
+      status: HttpStatus.NOT_FOUND,
+      description: 'Review not found.',
+    })
   public async deleteReview(
     @CurrentUser() user: User, 
     @Param('id', IsValidUUIDPipe) reviewId: string) {

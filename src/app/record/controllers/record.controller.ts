@@ -17,13 +17,17 @@ private readonly recordService:RecordService
 ){}
 
 @Post('patient/:id')
-  @ApiOperation({ summary: 'Create a Medical Records for a patient' })
+  @ApiOperation({ summary: 'Create a medical records for a patient' })
   @ApiBody({ type: CreateMedicalRecordDto, 
-    description: 'Create a Medical Records for a patient' })
+    description: 'Create a medical records for a patient' })
   @ApiResponse({
     status: HttpStatus.CREATED,
     description:
-      'Medical Records created successfully.',
+      'Medical records created successfully.',
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Patient not found.',
   })
 @UseInterceptors(FileInterceptor('uploadedfile'))
 public async createMedicalRecord(
@@ -36,20 +40,28 @@ return await this.recordService.createMedicalRecord(uploadedfiles, user, patient
 }
 
 @Get('patient/:id')
-  @ApiOperation({ summary: 'Get a Medical Records of a patient' })
+  @ApiOperation({ summary: 'Get a medical records of a patient' })
   @ApiResponse({ 
     status: HttpStatus.OK, 
-    description: 'Medical Records retrieved successfully' })
+    description: 'medical records retrieved successfully' })
+    @ApiResponse({
+      status: HttpStatus.NOT_FOUND,
+      description: 'Medical records not found.',
+    })
   public async getMedicalRecord(
     @Param('id', IsValidUUIDPipe) patientId: string) {
     return this.recordService.getMedicalRecord(patientId);
   }
 
   @Put('patient/:id')
-  @ApiOperation({ summary: 'Update a Medical Records' })
+  @ApiOperation({ summary: 'Update a medical records' })
   @ApiResponse({ 
     status: HttpStatus.OK, 
-    description: 'Medical Records updated successfully' })
+    description: 'Medical records updated successfully' })
+    @ApiResponse({
+      status: HttpStatus.NOT_FOUND,
+      description: 'Patient records not found.',
+    })
   public async updateMedicalRecord(
     @UploadedFile() uploadedfiles: Express.Multer.File,
     @CurrentUser() user: User,

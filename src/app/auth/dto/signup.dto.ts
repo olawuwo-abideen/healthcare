@@ -10,7 +10,7 @@ import {
 } from 'class-validator';
 import { PasswordMatch } from 'src/shared/validations/password-validation.dto';
 import { UserRole } from 'src/shared/entities/user.entity';
-import { ApiProperty, ApiQuery } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 
 export class SignupDto {
@@ -69,6 +69,7 @@ export class SignupDto {
     example: 'Password123',
     })
   @IsNotEmpty()
+  @IsString()
   @MinLength(6, { message: 'Password must be at least 6 characters long' })
   @MaxLength(20, { message: 'Password must not exceed 20 characters' })
   @Matches(
@@ -85,6 +86,7 @@ export class SignupDto {
     description: 'The user password (at least 8 characters)',
     example: 'Password123',
     })
+    @IsString()
   @IsNotEmpty({ message: 'Confirm password is required' })
   @PasswordMatch()
   confirmPassword: string;

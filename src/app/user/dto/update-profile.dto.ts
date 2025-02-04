@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsMobilePhone, IsNotEmpty, IsString, IsNumber } from 'class-validator';
 import { Gender, DoctorSpecilization } from 'src/shared/entities/user.entity';
 
 
@@ -10,12 +9,60 @@ export class UpdateProfileDto {
     example: 'John',
   })
   @IsNotEmpty()
+  @IsString()
   firstname: string;
 
   @ApiProperty({
     description: 'Last name of the user.',
     example: 'Doe',
   })
+  @IsNotEmpty()
+  @IsString()
+  lastname: string;
+
+  @ApiProperty({
+    description: 'Age of the user.',
+    example: 25,
+  })
+  @IsNumber()
+  @IsNotEmpty()
+  age: number;
+
+  @ApiProperty({
+    description: 'Phone number of the user.',
+    example: '+1234567890',
+  })
+   @IsMobilePhone()
+  @IsNotEmpty()
+  phonenumber: string;
+
+  @ApiProperty({
+    description: 'The user gender. allowed values: female and male',
+    enum: Gender,
+    example: 'male',
+  })
+ @IsNotEmpty()
+ gender: Gender;
+
+}
+
+
+
+
+export class UpdateDoctorProfileDto {
+  @ApiProperty({
+    description: 'First name of the user.',
+    example: 'John',
+  })
+  @IsString()
+  @IsNotEmpty()
+  firstname: string;
+
+  @ApiProperty({
+    description: 'Last name of the user.',
+    example: 'Doe',
+  })
+  @IsString()
   @IsNotEmpty()
   lastname: string;
 
@@ -24,19 +71,21 @@ export class UpdateProfileDto {
     example: 25,
   })
   @IsNotEmpty()
+  @IsNumber()
   age: number;
 
   @ApiProperty({
     description: 'Phone number of the user.',
     example: '+1234567890',
   })
+   @IsMobilePhone()
   @IsNotEmpty()
   phonenumber: string;
 
   @ApiProperty({
-    description: 'The user gender. Allowed values: Female and Male',
+    description: 'The user gender. allowed values: female and male',
     enum: Gender,
-    example: 'Male',
+    example: 'male',
   })
  @IsNotEmpty()
  gender: Gender;
@@ -47,17 +96,22 @@ export class UpdateProfileDto {
   enum: DoctorSpecilization,
   example: 'cardiology',
 })
-// @IsNotEmpty()
+@IsNotEmpty()
 specialization: DoctorSpecilization;
 
 @ApiProperty({
   description: 'The doctor years of experience',
   example: '3',
 })
-// @IsNotEmpty()
+@IsNotEmpty()
 experienceyears: number;
 
+@ApiProperty({
+  description: 'The doctor clinic address',
+  example: '10 john doe avenue, ikeja lagos',
+})
+@IsString()
+@IsNotEmpty()
+clinicaddress: string;
 
 }
-
-

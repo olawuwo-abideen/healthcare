@@ -19,7 +19,7 @@ export class AuthController {
   ) {}
 
   @Post('signup')
-  @ApiOperation({ summary: 'User Sign-Up' })
+  @ApiOperation({ summary: 'User signup' })
   @ApiBody({ type: SignupDto, description: 'User Sign-Up Data' })
   @ApiResponse({
     status: HttpStatus.CREATED,
@@ -32,11 +32,11 @@ export class AuthController {
   }
 
   @Post('login')
-  @ApiOperation({ summary: 'User Log-In' })
+  @ApiOperation({ summary: 'User login' })
   @ApiBody({ type: LoginDto, description: 'User Log-In Data' })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'User successfully signed in. Access token generated.',
+    description: 'User successfully signed in. access token generated.',
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
@@ -47,24 +47,24 @@ export class AuthController {
   }
 
   @Post('forgot-password')
-  @ApiOperation({ summary: 'User Forgot password' })
+  @ApiOperation({ summary: 'User forgot password' })
   @ApiBody({ type: ForgotPasswordDto, description: 'User email' })
   @ApiResponse({
     status: HttpStatus.OK,
     description:
-      'User Forgot password,Input email to reset',
+      'Password Reset token sent to email',
   })
   async forgotPassword(@Body() { email }: ForgotPasswordDto) {
     return this.authService.forgotPassword(email);
   }
 
   @Post('reset-password')
-  @ApiOperation({ summary: 'User Reset Pasword' })
+  @ApiOperation({ summary: 'User reset password' })
   @ApiBody({ type: ResetPasswordDto, description: 'User reset password' })
   @ApiResponse({
     status: HttpStatus.OK,
     description:
-      'User Password Reset.',
+      'User password reset successfully',
   })
   async resetPassword(@Body() payload: ResetPasswordDto){
     await this.authService.resetPassword(payload);
@@ -72,11 +72,11 @@ export class AuthController {
 
 
   @Post('signout')
-  @ApiOperation({ summary: 'User Log-Out' })
+  @ApiOperation({ summary: 'User logout' })
   @ApiResponse({
     status: HttpStatus.OK,
     description:
-      'User successfully signed out. Refresh token cleared from the cookie.',
+      'User successfully signed out. refresh token cleared from the cookie.',
   })
   async signOut(@CurrentUser() user: Partial<User>, @Res() res: Response) {
     return await this.authService.logout(user, res);

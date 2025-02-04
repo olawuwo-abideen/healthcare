@@ -6,8 +6,7 @@ Column,
 CreateDateColumn,
 UpdateDateColumn,
 OneToMany,
-DeleteDateColumn,
-ManyToMany
+DeleteDateColumn
 } from 'typeorm';
 import { Review } from './review.entity';
 import { Prescription } from './prescription.entity';
@@ -97,6 +96,8 @@ specialization?: string;
 @Column({ name: 'experienceyears',  nullable: true })
 experienceyears?: number;
 
+@Column({ name: 'clinicaddress',  nullable: true })
+clinicaddress?: string;
 
 @CreateDateColumn({
 name: 'created_at',

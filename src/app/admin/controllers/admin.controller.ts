@@ -27,7 +27,6 @@ return await this.adminService.getAllUsers(paginationData);
 @ApiResponse({
   status: HttpStatus.OK,
   description: 'Delete a user successfully.',
-  type: [User],
 })
 public async deleteUser(
 @Param('id', IsValidUUIDPipe) id: string,

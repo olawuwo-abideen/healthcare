@@ -7,23 +7,19 @@
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({ name: 'medicalrecord_id', type: 'uuid', nullable: true, })
-    medicalrecordId: string;
-
 
     @Column({ type: 'uuid',  name: 'user_id', nullable: false })
     userId: string;
 
-
-    @ManyToOne(() => User, (user) => user.medicalrecords)
-    patient: User;
-
-    @ManyToOne(() => User, (user) => user.medicalrecords)
+    @ManyToOne(() => User)
     @JoinColumn({ name: 'user_id' })
     user: User;
 
     @ManyToOne(() => User)
-    doctor: User;
+    @JoinColumn({ name: 'patient_id' })
+    patient: User;
+
+
 
 
     @Column({ nullable: true })

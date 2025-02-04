@@ -1,28 +1,58 @@
-import { IsNotEmpty, IsUUID } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreatePrescriptionDto {
 
-  @IsNotEmpty()
-  medicine: string;
+@ApiProperty({
+description: 'A medicine prescribed for a patient',
+example: 'Paracetamol',
+})
+@IsString()
+@IsNotEmpty()
+medicine: string;
 
-  @IsNotEmpty()
-  dosage: string;
+@ApiProperty({
+description: 'Dosage for the medicine',
+example: '6 Tablet per day',
+})
+@IsString()
+@IsNotEmpty()
+dosage: string;
 
-  @IsNotEmpty()
-  instructions: string;
+@ApiProperty({
+description: 'Instruction on how the drug is to be taken',
+example: 'Two tablet after each meal',
+})
+@IsString()
+@IsNotEmpty()
+instructions: string;
 }
 
 
 
 export class UpdatePrescriptionDto {
 
-    @IsNotEmpty()
-    medicine: string;
-  
-    @IsNotEmpty()
-    dosage: string;
-  
-    @IsNotEmpty()
-    instructions: string;
-  }
-  
+@ApiProperty({
+description: 'A medicine prescribed for a patient',
+example: 'Paracetamol',
+})
+@IsString()
+@IsNotEmpty()
+medicine: string;
+
+@ApiProperty({
+description: 'Dosage for the medicine',
+example: '6 Tablet per day',
+})
+@IsString()
+@IsNotEmpty()
+dosage: string;
+
+@ApiProperty({
+description: 'Instruction on how the drug is to be taken',
+example: 'Two tablet after each meal',
+})
+@IsString()
+@IsNotEmpty()
+instructions: string;
+}

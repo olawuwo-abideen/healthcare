@@ -10,7 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcryptjs from 'bcryptjs';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { ChangePasswordDto } from '../dto/change-password.dto';
-import {  UpdateProfileDto } from '../dto/update-profile.dto';
+import {  UpdateProfileDto, UpdateDoctorProfileDto } from '../dto/update-profile.dto';
 import { CloudinaryService } from 'src/shared/cloudinary/services/cloudinary.service';
 
 @Injectable()
@@ -105,14 +105,6 @@ export class UserService {
       phonenumber: data.phonenumber,
       gender: data.gender,
     };
-  
-    if (user.role === UserRole.DOCTOR) {
-      Object.assign(dataToUpdate, {
-        specialization: data.specialization,
-        experienceYears: data.experienceyears,
-      });
-    }
-  
     Object.assign(user, dataToUpdate);
   
     await this.userRepository.save(user);
@@ -123,6 +115,31 @@ export class UserService {
     };
   }
   
+
+
+  public async updateDoctorProfile(
+    data: UpdateDoctorProfileDto,
+    user: User,
+  ): Promise<{ message: string; user: User }> {
+    const dataToUpdate: Partial<User> = {
+      firstname: data.firstname,
+      lastname: data.lastname,
+      age: data.age,
+      phonenumber: data.phonenumber,
+      gender: data.gender,
+      specialization: data.specialization,
+      experienceyears: data.experienceyears,
+      clinicaddress:data.clinicaddress
+    };
+    Object.assign(user, dataToUpdate);
+  
+    await this.userRepository.save(user);
+  
+    return {
+      message: 'Profile updated successfully',
+      user,
+    };
+  }
   
   public async updateUserImage(
     userimage: Express.Multer.File,

@@ -1,17 +1,26 @@
-import { IsNotEmpty } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateMedicalRecordDto {
 
-
-  @IsNotEmpty()
-  description: string;
+@ApiProperty({
+description: 'Doctor upload medical record for patient',
+example: 'X-ray image',
+})
+@IsString()
+@IsNotEmpty()
+description: string;
 }
 
 
 
 export class UpdateMedicalRecordDto {
 
-
-    @IsNotEmpty()
-    description: string;
-  }
+@ApiProperty({
+description: 'Doctor upload medical record for patient',
+example: 'X-ray image',
+})
+@IsString()
+@IsNotEmpty()
+description: string;
+}

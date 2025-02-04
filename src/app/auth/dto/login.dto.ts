@@ -24,6 +24,7 @@
     example: 'Password123',
     })
     @IsNotEmpty()
+    @IsString()
     @MinLength(6)
     @MaxLength(20)
     @Matches(
