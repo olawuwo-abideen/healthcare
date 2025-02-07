@@ -8,14 +8,14 @@ import { AuthModule } from '../auth/auth.module';
 import { JwtModule } from '@nestjs/jwt'; 
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([User]),
-    CloudinaryModule,
-    forwardRef(() => AuthModule),
-    JwtModule,
-  ],
-  controllers: [UserController],
-  providers: [UserService],
-  exports: [UserService],
+imports: [
+TypeOrmModule.forFeature([User]),
+CloudinaryModule,
+forwardRef(() => AuthModule),
+JwtModule,
+],
+controllers: [UserController],
+providers: [UserService],
+exports: [UserService],
 })
 export class UserModule {}

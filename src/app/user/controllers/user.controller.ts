@@ -60,6 +60,8 @@ status: HttpStatus.OK,
 description:
 'User profile updated successfully',
 })
+@UseGuards(AuthGuard)
+@Roles(UserRole.ADMIN, UserRole.PATIENT)
 public async updateProfile(
 @Body() payload: UpdateProfileDto,
 @CurrentUser() user: User,

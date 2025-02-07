@@ -11,6 +11,8 @@ DeleteDateColumn
 import { Review } from './review.entity';
 import { Prescription } from './prescription.entity';
 import { MedicalRecord } from './medical-record.entity';
+import { Appointment } from './appointment.entity';
+import { AvailabilitySlot } from './availabilityslot.entity';
 
 export enum UserRole {
 ADMIN = 'admin',
@@ -77,6 +79,12 @@ prescriptions?: Prescription[];
 
 @OneToMany(() => MedicalRecord, (medicalrecord) => medicalrecord.user)
 medicalrecords?: MedicalRecord[];
+
+@OneToMany(() => Appointment, (appointment) => appointment.user)
+appointments?: Appointment[];
+
+@OneToMany(() => AvailabilitySlot, (slot) => slot.user)
+availabilitySlots: AvailabilitySlot[];
 
 @Column()
 @Exclude()

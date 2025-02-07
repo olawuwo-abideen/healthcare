@@ -5,11 +5,17 @@ import { RecordController } from './controllers/record.controller';
 import { User } from 'src/shared/entities/user.entity';
 import { MedicalRecord } from 'src/shared/entities/medical-record.entity';
 import { CloudinaryModule } from 'src/shared/cloudinary/cloudinary.module';
+import { JwtModule } from '@nestjs/jwt';
+import { UserModule } from '../user/user.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
       imports: [
         TypeOrmModule.forFeature([User, MedicalRecord]),
-        CloudinaryModule
+        CloudinaryModule,
+            JwtModule.register({}),
+            UserModule,
+            AuthModule
       ],
   providers: [RecordService],
   controllers: [RecordController]

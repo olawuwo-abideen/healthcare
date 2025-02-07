@@ -13,29 +13,29 @@ import { CloudinaryModule } from 'src/shared/cloudinary/cloudinary.module';
 import { EmailModule } from 'src/shared/modules/email/email.module';
 
 @Module({
-  imports: [
-    forwardRef(() => UserModule), 
-    JwtModule.registerAsync({
-      inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET'),
-        signOptions: {
-          expiresIn: `${configService.get<string>('JWT_EXPIRES_IN')}`,
-        },
-      }),
-    }),
-    TypeOrmModule.forFeature([User]),
-    CloudinaryModule,
-    EmailModule,
-  ],
-  controllers: [AuthController],
-  providers: [
-    AuthService,
-    UserService,
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
-  ],
+imports: [
+forwardRef(() => UserModule), 
+JwtModule.registerAsync({
+inject: [ConfigService],
+useFactory: async (configService: ConfigService) => ({
+secret: configService.get<string>('JWT_SECRET'),
+signOptions: {
+expiresIn: `${configService.get<string>('JWT_EXPIRES_IN')}`,
+},
+}),
+}),
+TypeOrmModule.forFeature([User]),
+CloudinaryModule,
+EmailModule,
+],
+controllers: [AuthController],
+providers: [
+AuthService,
+UserService,
+{
+provide: APP_GUARD,
+useClass: AuthGuard,
+},
+],
 })
 export class AuthModule {}

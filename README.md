@@ -9,11 +9,6 @@ Installation
 
 
 
-npm i bcryptjs --legacy-peer-deps
-
-
-
-
 - navigate to the folder
 
 
@@ -43,7 +38,9 @@ Enter the following `npm start` command to Command Line Interface to Start the a
 
 This will start the app and set it up to listen for incoming connections on port 3000. 
 
-Use Postman to test the endpoint
+Use Postman or open api to test the endpoint
+
+Open API endpoints = http://localhost:3000/api/
 
 API Endpoints
 
@@ -78,12 +75,12 @@ The following API endpoints are available:
 - **GET /user/doctor**: Get all doctors.
 - **GET /user/doctor/:id**: Get a doctor.
 
-**Doctor Endpoint**
+**Availability Slot Endpoint**
 
-- **POST /availability/set/**: Set availability slots (Doctor only).
-- **POST /availability/get/:id**: Get doctor availability.
-- **PUT /availability/update/:id**: Update availability slot.
-- **DELETE /availability/remove/:id**: Remove availability slot.
+- **POST availabilityslot**: Set availability slots.
+- **GET availabilityslot**: Get doctor availability.
+- **PUT /availabilityslot/:id**: Update availability slot.
+- **DELETE /availabilityslot/:id**: Delete availability slot.
 
 **Appointments Endpoint**
 

@@ -1,9 +1,9 @@
 import {
-  CanActivate,
-  ExecutionContext,
-  Injectable,
-  UnauthorizedException,
-  ForbiddenException,
+CanActivate,
+ExecutionContext,
+Injectable,
+UnauthorizedException,
+ForbiddenException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
@@ -17,94 +17,87 @@ import { ROLES_KEY } from '../../../shared/decorators/roles.decorator';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(
-    private readonly reflector: Reflector,
-    private readonly jwtService: JwtService,
-    private readonly configService: ConfigService,
-    private readonly userService: UserService,
-  ) {}
+constructor(
+private readonly reflector: Reflector,
+private readonly jwtService: JwtService,
+private readonly configService: ConfigService,
+private readonly userService: UserService,
+) {}
 
-  async canActivate(context: ExecutionContext): Promise<boolean> {
-    // Check if the route is public
-    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
-      context.getHandler(),
-      context.getClass(),
-    ]);
+async canActivate(context: ExecutionContext): Promise<boolean> {
 
-    if (isPublic) {
-      return true;
-    }
+const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+context.getHandler(),
+context.getClass(),
+]);
 
-    const request = this.getRequest<IncomingMessage & { user?: User }>(context);
+if (isPublic) {
+return true;
+}
 
-    try {
-      // Authenticate the user
-      const user = await this.authenticateUser(request);
-      request.user = user;
+const request = this.getRequest<IncomingMessage & { user?: User }>(context);
 
-      // Authorize the user (Role-based access control)
-      return this.authorizeUser(user, context);
-    } catch (error) {
-      throw error;
-    }
-  }
+try {
 
-  /**
-   * Extracts and verifies the JWT, then fetches the user from the database.
-   */
-  private async authenticateUser(
-    request: IncomingMessage & { user?: User },
-  ): Promise<User> {
-    const token = this.getToken(request);
-    const payload = await this.jwtService.verifyAsync(token, {
-      secret: this.configService.get<string>('JWT_SECRET'),
-    });
+const user = await this.authenticateUser(request);
+request.user = user;
 
-    const userId = payload.sub;
-    const user: User | null = await this.userService.findOne({ id: userId });
 
-    if (!user) throw new UnauthorizedException('Invalid token: User not found');
+return this.authorizeUser(user, context);
+} catch (error) {
+throw error;
+}
+}
+private async authenticateUser(
+request: IncomingMessage & { user?: User },
+): Promise<User> {
+const token = this.getToken(request);
+const payload = await this.jwtService.verifyAsync(token, {
+secret: this.configService.get<string>('JWT_SECRET'),
+});
 
-    user.password = '';
-    return user;
-  }
+const userId = payload.sub;
+const user: User | null = await this.userService.findOne({ id: userId });
 
-  /**
-   * Checks if the user has the required roles to access the route.
-   */
-  private authorizeUser(user: User, context: ExecutionContext): boolean {
-    const requiredRoles = this.reflector.getAllAndOverride<UserRole[]>(ROLES_KEY, [
-      context.getHandler(),
-      context.getClass(),
-    ]);
+if (!user) throw new UnauthorizedException('Invalid token: User not found');
 
-    if (!requiredRoles) {
-      return true; // No roles required, allow access
-    }
+user.password = '';
+return user;
+}
 
-    const hasRole = requiredRoles.some((role) =>
-      user.role?.includes(role),
-    );
+private authorizeUser(user: User, context: ExecutionContext): boolean {
+const requiredRoles = this.reflector.getAllAndOverride<UserRole[]>(ROLES_KEY, [
+context.getHandler(),
+context.getClass(),
+]);
 
-    if (!hasRole) {
-      throw new ForbiddenException('Access denied: Insufficient permissions');
-    }
+if (!requiredRoles) {
+return true; 
+}
 
-    return true;
-  }
+const hasRole = requiredRoles.some((role) =>
+user.role?.includes(role),
+);
 
-  private getRequest<T>(context: ExecutionContext): T {
-    return context.switchToHttp().getRequest();
-  }
+if (!hasRole) {
+throw new ForbiddenException('Access denied: Insufficient permissions');
+}
 
-  private getToken(request: IncomingMessage & { user?: User }): string {
-    const authorization = request.headers['authorization'];
+return true;
+}
 
-    if (!authorization || authorization.trim() === '' || Array.isArray(authorization)) {
-      throw new UnauthorizedException('Missing or invalid Authorization header');
-    }
+private getRequest<T>(context: ExecutionContext): T {
+return context.switchToHttp().getRequest();
+}
 
-    const [_, token] = authorization.split(' ');
-    return token;
-  }
+private getToken(request: IncomingMessage & { user?: User }): string {
+const authorization = request.headers['authorization'];
+
+if (!authorization || authorization.trim() === '' || Array.isArray(authorization)) {
+throw new UnauthorizedException('Missing or invalid Authorization header');
+}
+
+const [_, token] = authorization.split(' ');
+return token;
+}
 }

@@ -20,8 +20,6 @@
     patient: User;
 
 
-
-
     @Column({ nullable: true })
     uploadedfiles: string;
 
