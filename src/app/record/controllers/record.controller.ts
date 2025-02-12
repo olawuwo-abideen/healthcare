@@ -3,13 +3,14 @@
   import { User,UserRole } from 'src/shared/entities/user.entity';
   import { RecordService } from '../services/record.service';
   import { IsValidUUIDPipe } from 'src/shared/pipes/is-valid-uuid.pipe';
-  import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+  import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
   import { CreateMedicalRecordDto, UpdateMedicalRecordDto } from '../dto/medicalrecord.dto';
   import { FileInterceptor } from '@nestjs/platform-express';
   import { AuthGuard } from 'src/app/auth/guards/auth.guard';
   import { Roles } from 'src/shared/decorators/roles.decorator';
 
-  @ApiTags('MedicalRecords')
+  @ApiBearerAuth()
+  @ApiTags('Medical Records')
   @Controller('medical-records')
   export class RecordController {
 

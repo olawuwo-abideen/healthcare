@@ -30,7 +30,7 @@ export class UpdateProfileDto {
 
   @ApiProperty({
     description: 'Phone number of the user.',
-    example: '+1234567890',
+    example: '08012345678',
   })
    @IsMobilePhone()
   @IsNotEmpty()

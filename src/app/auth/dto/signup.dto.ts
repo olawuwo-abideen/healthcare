@@ -37,7 +37,7 @@ lastname: string;
 @ApiProperty({
 required: true,
 description: 'The user email',
-example: 'abideenolawuwo2000@gmail',
+example: 'abideenolawuwo@gmail',
 })
 @IsNotEmpty()
 @IsEmail()
@@ -56,7 +56,7 @@ role: UserRole;
 @ApiProperty({
 required: true,
 description: 'The user phone number',
-example: '+234555555555',
+example: '09012345678',
 })
 @IsNotEmpty()
 @IsMobilePhone()
@@ -65,7 +65,7 @@ phonenumber: string;
 @ApiProperty({
 required: true,
 description: 'The user password (at least 8 characters)',
-example: 'Password123',
+example: 'Password123--',
 })
 @IsNotEmpty()
 @IsString()
@@ -83,7 +83,7 @@ password: string;
 @ApiProperty({
 required: true,
 description: 'The user password (at least 8 characters)',
-example: 'Password123',
+example: 'Password123--',
 })
 @IsString()
 @IsNotEmpty({ message: 'Confirm password is required' })

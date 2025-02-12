@@ -17,10 +17,11 @@ import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
 import { ChangePasswordDto } from '../dto/change-password.dto';
 import { UpdateProfileDto, UpdateDoctorProfileDto } from '../dto/update-profile.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/app/auth/guards/auth.guard';
 import { Roles } from 'src/shared/decorators/roles.decorator';
 
+@ApiBearerAuth()
 @ApiTags('User')
 @Controller('user')
 export class UserController {

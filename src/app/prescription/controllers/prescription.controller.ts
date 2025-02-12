@@ -3,11 +3,12 @@
   import { User, UserRole } from 'src/shared/entities/user.entity';
   import { PrescriptionService } from '../services/prescription.service';
   import { IsValidUUIDPipe } from 'src/shared/pipes/is-valid-uuid.pipe';
-  import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+  import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
   import { CreatePrescriptionDto, UpdatePrescriptionDto } from '../dto/prescription.dto';
   import { AuthGuard } from 'src/app/auth/guards/auth.guard';
   import { Roles } from 'src/shared/decorators/roles.decorator';
 
+  @ApiBearerAuth()
   @ApiTags('Prescription')
   @Controller('prescription')
   export class PrescriptionController {

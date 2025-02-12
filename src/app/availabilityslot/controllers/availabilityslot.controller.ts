@@ -3,11 +3,12 @@
   import { SetAvailabilityDto, UpdateAvailabilityDto } from '../dto/availabilityslot.dto';
   import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
   import { User, UserRole } from 'src/shared/entities/user.entity';
-  import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+  import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
   import { AuthGuard } from 'src/app/auth/guards/auth.guard';
   import { Roles } from 'src/shared/decorators/roles.decorator';
   import { IsValidUUIDPipe } from 'src/shared/pipes/is-valid-uuid.pipe';
 
+  @ApiBearerAuth()
   @ApiTags('Availability Slot')
   @Controller('availabilityslot')
   export class AvailabilitySlotController {

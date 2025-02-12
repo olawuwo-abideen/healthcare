@@ -113,3 +113,10 @@ The following API endpoints are available:
 - **GET /reviews/doctor/:id**: Get reviews for a doctor.
 - **PUT /reviews/update/:id**: Update an existing review.
 - **DELETE /reviews/delete/:id**: Delete a review.
+
+
+
+
+
+
+

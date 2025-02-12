@@ -1,7 +1,7 @@
 import { Controller, Post, Get, Put, Delete, Body, Param, UseGuards, HttpStatus } from '@nestjs/common';
 import { AppointmentService } from '../services/appointment.service';
 import { BookAppointmentDto, UpdateAppointmentDto } from '../dto/appointment.dto';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
 import { User } from 'src/shared/entities/user.entity';
 import { UserRole } from 'src/shared/entities/user.entity';
@@ -10,6 +10,7 @@ import { AuthGuard } from 'src/app/auth/guards/auth.guard';
 import { RolesGuard } from 'src/app/auth/guards/role.guard';
 import { IsValidUUIDPipe } from 'src/shared/pipes/is-valid-uuid.pipe';
 
+@ApiBearerAuth()
 @ApiTags('Appointments')
 @Controller('appointments')
 export class AppointmentController {

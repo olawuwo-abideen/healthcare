@@ -4,10 +4,11 @@ import { User, UserRole } from 'src/shared/entities/user.entity';
 import { ReviewService } from '../services/review.service';
 import { IsValidUUIDPipe } from 'src/shared/pipes/is-valid-uuid.pipe';
 import { CreateReviewDto, UpdateReviewDto } from '../dto/review.dto';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/app/auth/guards/auth.guard';
 import { Roles } from 'src/shared/decorators/roles.decorator';
 
+@ApiBearerAuth()
 @ApiTags('Review')
 @Controller('review')
 export class ReviewController {
