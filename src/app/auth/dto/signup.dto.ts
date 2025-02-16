@@ -37,7 +37,7 @@ lastname: string;
 @ApiProperty({
 required: true,
 description: 'The user email',
-example: 'abideenolawuwo@gmail',
+example: 'abideenolawuwo@gmail.com',
 })
 @IsNotEmpty()
 @IsEmail()

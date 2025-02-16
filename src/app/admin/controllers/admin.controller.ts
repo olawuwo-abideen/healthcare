@@ -14,7 +14,7 @@ export class AdminController {
 
 constructor(private readonly adminService: AdminService){}
 
-@Get('/users')
+@Get('/users') 
 @ApiOperation({ summary: 'Get all users' })
 @ApiResponse({
 status: HttpStatus.OK,
