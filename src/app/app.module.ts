@@ -2,7 +2,7 @@
   import { ThrottlerModule } from '@nestjs/throttler';
   import { ConfigModule } from '@nestjs/config';
   import { TypeOrmModule } from '@nestjs/typeorm';
-  import { TypeOrmConfigService } from 'src/shared/services/typeorm/typeorm-config.service';
+  import { TypeOrmConfigService } from '../shared/services/typeorm/typeorm-config.service';
   import { AuthModule } from './auth/auth.module';
   import { UserModule } from './user/user.module';
   import { AppointmentModule } from './appointment/appointment.module';
