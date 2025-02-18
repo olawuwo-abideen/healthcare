@@ -59,7 +59,7 @@ description: 'The user phone number',
 example: '09012345678',
 })
 @IsNotEmpty()
-@IsMobilePhone()
+// @IsMobilePhone()
 phonenumber: string;
 
 @ApiProperty({

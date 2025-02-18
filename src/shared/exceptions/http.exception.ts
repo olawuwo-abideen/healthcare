@@ -1,4 +1,3 @@
-// http-exception.filter.ts
 import {
   ExceptionFilter,
   Catch,
@@ -28,8 +27,6 @@ export class HttpExceptionFilter
       code: statusCode,
       message,
     };
-
-    // Add errors property if exception is validation exception
     if (statusCode == HttpStatus.BAD_REQUEST && !isString(message)) {
       errorResponse.errors = message;
       errorResponse.message = exceptionResponse.error;

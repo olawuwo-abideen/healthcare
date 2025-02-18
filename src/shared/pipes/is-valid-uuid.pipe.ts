@@ -1,8 +1,7 @@
 import {
   ArgumentMetadata,
   BadRequestException,
-  Injectable,
-  PipeTransform,
+  Injectable
 } from '@nestjs/common';
 import { ParseUUIDPipe } from '@nestjs/common';
 
@@ -16,7 +15,6 @@ export class IsValidUUIDPipe extends ParseUUIDPipe {
     try {
       return await super.transform(value, metadata);
     } catch (error) {
-      // Custom error message
       throw new BadRequestException(
         'Invalid UUID format. Please provide a valid UUID.',
       );
