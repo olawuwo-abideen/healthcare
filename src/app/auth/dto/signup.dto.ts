@@ -8,8 +8,8 @@ Matches,
 MaxLength,
 MinLength,
 } from 'class-validator';
-import { PasswordMatch } from 'src/shared/validations/password-validation.dto';
-import { UserRole } from 'src/shared/entities/user.entity';
+import { PasswordMatch } from '../../../shared/validations/password-validation.dto';
+import { UserRole } from '../../../shared/entities/user.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 

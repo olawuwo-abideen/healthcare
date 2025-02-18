@@ -10,16 +10,16 @@ UploadedFile,
 HttpStatus,
 UseGuards
 } from '@nestjs/common';
-import RequestWithUser from 'src/shared/dtos/request-with-user.dto';
+import RequestWithUser from '../../../shared/dtos/request-with-user.dto';
 import { UserService } from '../services/user.service';
-import { User, UserRole } from 'src/shared/entities/user.entity';
-import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
+import { User, UserRole } from '../../../shared/entities/user.entity';
+import { CurrentUser } from '../../../shared/decorators/current-user.decorator';
 import { ChangePasswordDto } from '../dto/change-password.dto';
 import { UpdateProfileDto, UpdateDoctorProfileDto } from '../dto/update-profile.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from 'src/app/auth/guards/auth.guard';
-import { Roles } from 'src/shared/decorators/roles.decorator';
+import { AuthGuard } from '../../../app/auth/guards/auth.guard';
+import { Roles } from '../../../shared/decorators/roles.decorator';
 
 @ApiBearerAuth()
 @ApiTags('User')

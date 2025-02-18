@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { PrescriptionService } from './services/prescription.service';
 import { PrescriptionController } from './controllers/prescription.controller';
-import { User } from 'src/shared/entities/user.entity';
-import { Prescription } from 'src/shared/entities/prescription.entity';
+import { User } from '../../shared/entities/user.entity';
+import { Prescription } from '../../shared/entities/prescription.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from '../user/user.module';

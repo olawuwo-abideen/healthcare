@@ -4,9 +4,9 @@ import { EmailService } from './email.service';
 import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
-import { UserModule } from 'src/app/user/user.module';
+import { UserModule } from '../../../app/user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from 'src/shared/entities/user.entity';
+import { User } from '../../../shared/entities/user.entity';
 
 @Module({
   imports: [

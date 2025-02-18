@@ -1,8 +1,8 @@
-  import { BadRequestException, ForbiddenException, Injectable, Logger, NotFoundException } from '@nestjs/common';
+  import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
   import { InjectRepository } from '@nestjs/typeorm';
   import { Repository } from 'typeorm';
-  import { User } from 'src/shared/entities/user.entity';
-  import { Review } from 'src/shared/entities/review.entity';
+  import { User } from '../../../shared/entities/user.entity';
+  import { Review } from '../../../shared/entities/review.entity';
   import { CreateReviewDto, UpdateReviewDto } from '../dto/review.dto';
 
   @Injectable()

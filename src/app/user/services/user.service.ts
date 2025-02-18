@@ -5,13 +5,13 @@ import {
   Repository,
   UpdateResult,
 } from 'typeorm';
-import { User, UserRole } from 'src/shared/entities/user.entity';
+import { User, UserRole } from '../../../shared/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcryptjs from 'bcryptjs';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { ChangePasswordDto } from '../dto/change-password.dto';
 import {  UpdateProfileDto, UpdateDoctorProfileDto } from '../dto/update-profile.dto';
-import { CloudinaryService } from 'src/shared/cloudinary/services/cloudinary.service';
+import { CloudinaryService } from '../../../shared/cloudinary/services/cloudinary.service';
 
 @Injectable()
 export class UserService {

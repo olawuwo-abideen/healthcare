@@ -1,9 +1,9 @@
   import { Injectable, NotFoundException } from '@nestjs/common';
   import { InjectRepository } from '@nestjs/typeorm';
   import { Repository } from 'typeorm';
-  import { AvailabilitySlot } from 'src/shared/entities/availabilityslot.entity';
+  import { AvailabilitySlot } from '../../../shared/entities/availabilityslot.entity';
   import { SetAvailabilityDto, UpdateAvailabilityDto } from '../dto/availabilityslot.dto';
-  import { User } from 'src/shared/entities/user.entity';
+  import { User } from '../../../shared/entities/user.entity';
 
   @Injectable()
   export class AvailabilitySlotService {

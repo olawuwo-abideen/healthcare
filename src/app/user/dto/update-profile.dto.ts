@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsMobilePhone, IsNotEmpty, IsString, IsNumber } from 'class-validator';
-import { Gender, DoctorSpecilization } from 'src/shared/entities/user.entity';
+import { Gender, DoctorSpecilization } from '../../../shared/entities/user.entity';
 
 
 export class UpdateProfileDto {

@@ -1,10 +1,10 @@
   import {  BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
   import { InjectRepository } from '@nestjs/typeorm';
   import { Repository } from 'typeorm';
-  import { User } from 'src/shared/entities/user.entity';
-  import { MedicalRecord } from 'src/shared/entities/medical-record.entity';
+  import { User } from '../../../shared/entities/user.entity';
+  import { MedicalRecord } from '../../../shared/entities/medical-record.entity';
   import { CreateMedicalRecordDto, UpdateMedicalRecordDto } from '../dto/medicalrecord.dto';
-  import { CloudinaryService } from 'src/shared/cloudinary/services/cloudinary.service';
+  import { CloudinaryService } from '../../../shared/cloudinary/services/cloudinary.service';
 
 
 

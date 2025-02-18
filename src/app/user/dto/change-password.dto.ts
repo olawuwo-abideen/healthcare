@@ -1,5 +1,5 @@
 import { IsNotEmpty, MinLength, MaxLength, Matches } from 'class-validator';
-import { PasswordMatch } from 'src/shared/validations/password-validation.dto';
+import { PasswordMatch } from '../../../shared/validations/password-validation.dto';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ChangePasswordDto {

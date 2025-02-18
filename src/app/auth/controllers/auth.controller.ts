@@ -2,12 +2,12 @@ import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { SignupDto } from '../dto/signup.dto';
 import { LoginDto } from '../dto/login.dto';
-import { Public } from 'src/shared/decorators/public.decorator';
+import { Public } from '../../../shared/decorators/public.decorator';
 import { ForgotPasswordDto, ResetPasswordDto } from '../dto/reset-password.dto';
 import {  Response } from 'express';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { User } from 'src/shared/entities/user.entity';
-import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
+import { User } from '../../../shared/entities/user.entity';
+import { CurrentUser } from '../../../shared/decorators/current-user.decorator';
 
 
 @ApiTags('Auth')

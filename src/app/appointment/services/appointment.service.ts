@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Appointment, AppointmentStatus } from '../../../shared/entities/appointment.entity';
 import { BookAppointmentDto, UpdateAppointmentDto } from '../dto/appointment.dto';
-import { User } from 'src/shared/entities/user.entity';
-import { AvailabilitySlot } from 'src/shared/entities/availabilityslot.entity';
+import { User } from '../../../shared/entities/user.entity';
+import { AvailabilitySlot } from '../../../shared/entities/availabilityslot.entity';
 
 
 @Injectable()

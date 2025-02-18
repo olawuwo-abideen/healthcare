@@ -1,12 +1,12 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common';
-import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
-import { User, UserRole } from 'src/shared/entities/user.entity';
+import { CurrentUser } from '../../../shared/decorators/current-user.decorator';
+import { User, UserRole } from '../../../shared/entities/user.entity';
 import { ReviewService } from '../services/review.service';
-import { IsValidUUIDPipe } from 'src/shared/pipes/is-valid-uuid.pipe';
+import { IsValidUUIDPipe } from '../../../shared/pipes/is-valid-uuid.pipe';
 import { CreateReviewDto, UpdateReviewDto } from '../dto/review.dto';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from 'src/app/auth/guards/auth.guard';
-import { Roles } from 'src/shared/decorators/roles.decorator';
+import { AuthGuard } from '../../../app/auth/guards/auth.guard';
+import { Roles } from '../../../shared/decorators/roles.decorator';
 
 @ApiBearerAuth()
 @ApiTags('Review')

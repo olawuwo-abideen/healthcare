@@ -1,8 +1,8 @@
 import {  BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from 'src/shared/entities/user.entity';
-import { Prescription } from 'src/shared/entities/prescription.entity';
+import { User } from '../../../shared/entities/user.entity';
+import { Prescription } from '../../../shared/entities/prescription.entity';
 import { CreatePrescriptionDto, UpdatePrescriptionDto } from '../dto/prescription.dto';
 
 

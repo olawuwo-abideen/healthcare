@@ -10,11 +10,11 @@ import {  Response } from 'express';
 import { UserService } from '../../user/services/user.service';
 import { EntityManager, Repository } from 'typeorm';
 import { SignupDto } from '../dto/signup.dto';
-import { User } from 'src/shared/entities/user.entity';
+import { User } from '../../../shared/entities/user.entity';
 import { LoginDto } from '../dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
-import { EmailService } from 'src/shared/modules/email/email.service';
+import { EmailService } from '../../../shared/modules/email/email.service';
 import { ResetPasswordDto } from '../dto/reset-password.dto';
 import { ConfigService } from '@nestjs/config';
 import * as bcryptjs from "bcryptjs"

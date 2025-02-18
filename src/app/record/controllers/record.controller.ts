@@ -1,13 +1,13 @@
   import { Body, Controller, Get, HttpStatus, Param, Post, Put, UploadedFile, UseInterceptors, UseGuards } from '@nestjs/common';
-  import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
-  import { User,UserRole } from 'src/shared/entities/user.entity';
+  import { CurrentUser } from '../../../shared/decorators/current-user.decorator';
+  import { User,UserRole } from '../../../shared/entities/user.entity';
   import { RecordService } from '../services/record.service';
-  import { IsValidUUIDPipe } from 'src/shared/pipes/is-valid-uuid.pipe';
+  import { IsValidUUIDPipe } from '../../../shared/pipes/is-valid-uuid.pipe';
   import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
   import { CreateMedicalRecordDto, UpdateMedicalRecordDto } from '../dto/medicalrecord.dto';
   import { FileInterceptor } from '@nestjs/platform-express';
-  import { AuthGuard } from 'src/app/auth/guards/auth.guard';
-  import { Roles } from 'src/shared/decorators/roles.decorator';
+  import { AuthGuard } from '../../../app/auth/guards/auth.guard';
+  import { Roles } from '../../../shared/decorators/roles.decorator';
 
   @ApiBearerAuth()
   @ApiTags('Medical Records')

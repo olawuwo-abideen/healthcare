@@ -1,11 +1,11 @@
 import { Controller, Delete, Get, HttpStatus, Param,UseGuards, Query } from '@nestjs/common';
 import { AdminService } from '../services/admin.service';
-import { IsValidUUIDPipe } from 'src/shared/pipes/is-valid-uuid.pipe';
+import { IsValidUUIDPipe } from '../../../shared/pipes/is-valid-uuid.pipe';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { User, UserRole } from 'src/shared/entities/user.entity';
-import { PaginationDto } from 'src/shared/dtos/pagination.dto';
-import { AuthGuard } from 'src/app/auth/guards/auth.guard';
-import { Roles } from 'src/shared/decorators/roles.decorator';
+import { User, UserRole } from '../../../shared/entities/user.entity';
+import { PaginationDto } from '../../../shared/dtos/pagination.dto';
+import { AuthGuard } from '../../../app/auth/guards/auth.guard';
+import { Roles } from '../../../shared/decorators/roles.decorator';
 
 @ApiBearerAuth()
 @ApiTags('Admin')

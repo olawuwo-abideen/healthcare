@@ -8,9 +8,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './guards/auth.guard';
-import { User } from 'src/shared/entities/user.entity';
-import { CloudinaryModule } from 'src/shared/cloudinary/cloudinary.module';
-import { EmailModule } from 'src/shared/modules/email/email.module';
+import { User } from '../../shared/entities/user.entity';
+import { CloudinaryModule } from '../../shared/cloudinary/cloudinary.module';
+import { EmailModule } from '../../shared/modules/email/email.module';
 
 @Module({
 imports: [

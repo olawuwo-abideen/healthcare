@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsUUID, IsEnum } from 'class-validator';
-import { AppointmentStatus } from 'src/shared/entities/appointment.entity';
+import { IsUUID } from 'class-validator';
+
 
 
 export class BookAppointmentDto {

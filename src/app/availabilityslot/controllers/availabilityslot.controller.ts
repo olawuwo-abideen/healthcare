@@ -1,12 +1,12 @@
   import { Controller, Post, Get, Put, Delete, Param, Body, HttpStatus,UseGuards } from '@nestjs/common';
   import { AvailabilitySlotService } from '../services/availabilityslot.service';
   import { SetAvailabilityDto, UpdateAvailabilityDto } from '../dto/availabilityslot.dto';
-  import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
-  import { User, UserRole } from 'src/shared/entities/user.entity';
+  import { CurrentUser } from '../../../shared/decorators/current-user.decorator';
+  import { User, UserRole } from '../../../shared/entities/user.entity';
   import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-  import { AuthGuard } from 'src/app/auth/guards/auth.guard';
-  import { Roles } from 'src/shared/decorators/roles.decorator';
-  import { IsValidUUIDPipe } from 'src/shared/pipes/is-valid-uuid.pipe';
+  import { AuthGuard } from '../../../app/auth/guards/auth.guard';
+  import { Roles } from '../../../shared/decorators/roles.decorator';
+  import { IsValidUUIDPipe } from '../../../shared/pipes/is-valid-uuid.pipe';
 
   @ApiBearerAuth()
   @ApiTags('Availability Slot')

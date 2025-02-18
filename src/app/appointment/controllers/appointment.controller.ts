@@ -2,13 +2,13 @@ import { Controller, Post, Get, Put, Delete, Body, Param, UseGuards, HttpStatus 
 import { AppointmentService } from '../services/appointment.service';
 import { BookAppointmentDto, UpdateAppointmentDto } from '../dto/appointment.dto';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CurrentUser } from 'src/shared/decorators/current-user.decorator';
-import { User } from 'src/shared/entities/user.entity';
-import { UserRole } from 'src/shared/entities/user.entity';
-import { Roles } from 'src/shared/decorators/roles.decorator';
-import { AuthGuard } from 'src/app/auth/guards/auth.guard';
-import { RolesGuard } from 'src/app/auth/guards/role.guard';
-import { IsValidUUIDPipe } from 'src/shared/pipes/is-valid-uuid.pipe';
+import { CurrentUser } from '../../../shared/decorators/current-user.decorator';
+import { User } from '../../../shared/entities/user.entity';
+import { UserRole } from '../../../shared/entities/user.entity';
+import { Roles } from '../../../shared/decorators/roles.decorator';
+import { AuthGuard } from '../../../app/auth/guards/auth.guard';
+import { RolesGuard } from '../../../app/auth/guards/role.guard';
+import { IsValidUUIDPipe } from '../../../shared/pipes/is-valid-uuid.pipe';
 
 @ApiBearerAuth()
 @ApiTags('Appointments')

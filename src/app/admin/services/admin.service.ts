@@ -1,9 +1,9 @@
-import { Injectable, NotFoundException,  Query } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/shared/entities/user.entity';
+import { User } from '../../../shared/entities/user.entity';
 import { Repository } from 'typeorm';
-import { PaginationDto } from 'src/shared/dtos/pagination.dto';
-import { UserRole } from 'src/shared/entities/user.entity';
+import { PaginationDto } from '../../../shared/dtos/pagination.dto';
+import { UserRole } from '../../../shared/entities/user.entity';
 
 @Injectable()
 export class AdminService {
