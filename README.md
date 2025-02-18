@@ -1,4 +1,6 @@
-Backend to an Healthcare App 
+Healthcare Application
+
+The Healthcare App is a robust backend system designed to manage Admin, Doctor, and Patient roles with secure authentication and role-based access control. It enables patient record management, appointment scheduling, doctor review and medical history tracking while ensuring data privacy.
 
 Installation
 
@@ -24,14 +26,30 @@ Open a terminal and enter the following command to install all the  modules need
 Create a `.env` file with
 
 `POSTGRES_HOST=127.0.0.1`
+
+
 `POSTGRES_PORT=5432`
+
+
 `POSTGRES_USER=postgres`
+
+
 `POSTGRES_PASSWORD=password`
+
+
 `POSTGRES_DATABASE=healthcare`
+
+
 `PORT=3000`
+
+
 `JWT_SECRET=secret`
+
+
 `JWT_EXPIRATION_TIME=90d`
-`NODE_ENV="dev'`
+
+
+`NODE_ENV=development'`
 
 
 Enter the following `npm start` command to Command Line Interface to Start the app
@@ -40,7 +58,7 @@ This will start the app and set it up to listen for incoming connections on port
 
 Use Postman or open api to test the endpoint
 
-Open API endpoints = http://localhost:3000/api/
+Open API endpoints = http://localhost:3000/api/docs
 
 API Endpoints
 
@@ -113,10 +131,3 @@ The following API endpoints are available:
 - **GET /reviews/doctor/:id**: Get reviews for a doctor.
 - **PUT /reviews/update/:id**: Update an existing review.
 - **DELETE /reviews/delete/:id**: Delete a review.
-
-
-
-
-
-
-
