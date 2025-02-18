@@ -32,7 +32,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
   .setTitle('Healthcare')
   .setDescription('A healthcare app backend')
-  .setVersion('1.0')
+  .setVersion('0.1')
   .addBearerAuth()
   .build();
   const document = SwaggerModule.createDocument(app, config);
@@ -63,10 +63,3 @@ async function bootstrap() {
   await app.listen(port, '0.0.0.0');
 }
 bootstrap();
-
-
-
-
-
-
-
