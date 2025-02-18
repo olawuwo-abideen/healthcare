@@ -1,8 +1,8 @@
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import helmet from 'helmet';
-// import compression from 'compression';
-import * as cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser';
+import compression from 'compression';
 import { HttpExceptionFilter } from './shared/exceptions/http.exception';
 import { HttpResponseInterceptor } from './shared/interceptors/http-response.interceptor';
 import { ValidationPipe } from './shared/pipes/validation.pipe';
@@ -19,7 +19,7 @@ async function bootstrap() {
     credentials: true,
     
   });
-  // app.use(compression());
+  app.use(compression());
   app.use(cookieParser());
   app.useGlobalInterceptors(new HttpResponseInterceptor());
   app.useGlobalPipes(new ValidationPipe());
