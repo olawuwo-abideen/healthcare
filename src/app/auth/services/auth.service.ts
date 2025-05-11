@@ -110,10 +110,6 @@ return { message: 'Reset token sent to user email' };
 }
 
 
-
-
-
-
 public async decodeConfirmationToken(token: string) {
 try {
 const payload = await this.jwtService.verify(token, {
@@ -128,11 +124,6 @@ throw new BadRequestException('Reset password link expired.');
 throw new BadRequestException('Reset password link expired.');
 }
 }
-
-
-
-
-
 
 async resetPassword(payload: ResetPasswordDto): Promise<{message:string}> {
 const email = await this.decodeConfirmationToken(payload.token);

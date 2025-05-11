@@ -89,22 +89,28 @@ data: prescriptions.map(prescription => ({
 };
 }
 
+
 public async updatePrescription(user: User, prescriptionId: string, data: UpdatePrescriptionDto): Promise<any> {
-const updatedprescription = await this.prescriptionRepository.findOne({
-where: { id: prescriptionId },
-});
+  const prescription = await this.prescriptionRepository.findOne({
+    where: { id: prescriptionId },
+  });
 
-if (!updatedprescription) {
-throw new NotFoundException('Review not found');
+  if (!prescription) {
+    throw new NotFoundException('Prescription not found');
+  }
+
+  await this.prescriptionRepository.update(prescriptionId, data);
+
+  const updatedprescription = await this.prescriptionRepository.findOne({
+    where: { id: prescriptionId },
+  });
+
+  return {
+    message: 'Prescription updated successfully',
+    updatedprescription,
+  };
 }
 
-await this.prescriptionRepository.update(prescriptionId, data);
-
-return {
-message: 'Prescription updated successfully',
-updatedprescription
-};
-}
 
 
 }
