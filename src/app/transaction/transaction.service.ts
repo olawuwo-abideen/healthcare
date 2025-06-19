@@ -50,10 +50,10 @@ return { totalTransactions, totalPage, currentPage, transactions };
 
 public async getTransaction(
 user: User,
-transactionId: string,
+id: string,
 ): Promise<Transaction> {
 const transaction = await this.transactionRepository.findOne({
-where: { id: transactionId, userId: user.id },
+where: { id: id, user: { id: user.id }},
 });
 
 if (!transaction) {
