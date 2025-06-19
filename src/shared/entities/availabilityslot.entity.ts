@@ -5,23 +5,27 @@ import { Exclude } from 'class-transformer';
 
 @Entity()
 export class AvailabilitySlot {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+@PrimaryGeneratedColumn('uuid')
+id: string;
 
-  @ManyToOne(() => User, (doctor) => doctor.availabilitySlots)
-  user: User;
+@ManyToOne(() => User, (doctor) => doctor.availabilitySlots)
+user: User;
 
-  @Column({ type: 'timestamp' })
-  startTime: Date;
+@Column({ type: 'timestamp' })
+startTime: Date;
 
-  @Column({ type: 'timestamp' })
-  endTime: Date;
+@Column({ type: 'timestamp' })
+endTime: Date;
 
-  @Column({ default: true })
-  isAvailable: boolean;
+@Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
+amount: number;
 
-  // @OneToMany(() => Appointment, (appointment) => appointment.slot)
-  // appointments: Appointment[];
+@Column({ default: true })
+isAvailable: boolean;
+
+
+// @OneToMany(() => Appointment, (appointment) => appointment.slot)
+// appointments: Appointment[];
 
 @CreateDateColumn({
 name: 'created_at',

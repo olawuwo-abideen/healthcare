@@ -11,6 +11,7 @@
   import { ReviewModule } from './review/review.module';
   import { AdminModule } from './admin/admin.module';
   import { AvailabilitySlotModule } from './availabilityslot/availabilityslot.module';
+import { TransactionModule } from './transaction/transaction.module';
 
   @Module({
   imports: [
@@ -34,6 +35,7 @@
   PrescriptionModule,
   ReviewModule,
   AdminModule,
+  TransactionModule,
   ],
   controllers: [],
   providers: [],

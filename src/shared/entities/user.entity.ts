@@ -13,6 +13,7 @@ import { Prescription } from './prescription.entity';
 import { MedicalRecord } from './medical-record.entity';
 import { Appointment } from './appointment.entity';
 import { AvailabilitySlot } from './availabilityslot.entity';
+import { Transaction } from './transaction.entity';
 
 export enum UserRole {
 ADMIN = 'admin',
@@ -21,16 +22,16 @@ PATIENT = 'patient',
 }
 
 export enum DoctorSpecilization {
-    CARDIOLOGY = 'cardiology',
-    DENTISTRY = 'dentistry',
-    NEUROLOGY = 'neurology',
-    GYNECOLOGY = 'gynecology',
-    ONCOLOGY = 'oncology',
-    OPHTHALMOLOGY = 'ophthalmology',
-    OTOLARYNGOLOGY = 'otolaryngology',
-    PEDIATRICS = 'pediatrics',
-    PSYCHIATRY = 'psychiatry',
-    RADIOLOGY = 'radiology'
+CARDIOLOGY = 'cardiology',
+DENTISTRY = 'dentistry',
+NEUROLOGY = 'neurology',
+GYNECOLOGY = 'gynecology',
+ONCOLOGY = 'oncology',
+OPHTHALMOLOGY = 'ophthalmology',
+OTOLARYNGOLOGY = 'otolaryngology',
+PEDIATRICS = 'pediatrics',
+PSYCHIATRY = 'psychiatry',
+RADIOLOGY = 'radiology'
 }
 
 export enum Gender {
@@ -85,6 +86,9 @@ appointments?: Appointment[];
 
 @OneToMany(() => AvailabilitySlot, (slot) => slot.user)
 availabilitySlots: AvailabilitySlot[];
+
+@OneToMany(() => Transaction, (transaction) => transaction.user)
+transactions?: Transaction[];
 
 @Column()
 @Exclude()

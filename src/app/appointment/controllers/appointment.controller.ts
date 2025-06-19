@@ -1,6 +1,6 @@
-import { Controller, Post, Get, Put, Delete, Body, Param, UseGuards, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Get, Put, Delete, Body, Param, UseGuards, HttpStatus, Patch } from '@nestjs/common';
 import { AppointmentService } from '../services/appointment.service';
-import { BookAppointmentDto, UpdateAppointmentDto } from '../dto/appointment.dto';
+import { BookAppointmentDto, RescheduleAppointmentDto } from '../dto/appointment.dto';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '../../../shared/decorators/current-user.decorator';
 import { User } from '../../../shared/entities/user.entity';
@@ -10,14 +10,28 @@ import { AuthGuard } from '../../../app/auth/guards/auth.guard';
 import { RolesGuard } from '../../../app/auth/guards/role.guard';
 import { IsValidUUIDPipe } from '../../../shared/pipes/is-valid-uuid.pipe';
 
+
 @ApiBearerAuth()
 @ApiTags('Appointments')
 @Controller('appointments')
 export class AppointmentController {
 constructor(private readonly appointmentService: AppointmentService) {}
 
-@Post('')    
-@ApiOperation({ summary: 'Create appointment with doctor' })
+@Get('')
+@ApiOperation({ summary: 'Get user appointment' })
+@ApiResponse({
+status: HttpStatus.OK,
+description:
+'Appointment retrieved successfully.',
+})
+@UseGuards(AuthGuard)
+@Roles(UserRole.PATIENT)
+async getPatientAppointments(@CurrentUser() user: User) {
+return this.appointmentService.getPatientAppointments(user);
+}
+
+@Post('booking')    
+@ApiOperation({ summary: 'book appointment from availability slot' })
 @ApiBody({ type: BookAppointmentDto, 
 description: 'Create appointment data' })
 @ApiResponse({
@@ -33,18 +47,9 @@ async bookAppointment(
 return this.appointmentService.bookAppointment(user, data);
 }
 
-@Get('')
-@ApiOperation({ summary: 'Get appointment with doctor' })
-@ApiResponse({
-status: HttpStatus.OK,
-description:
-'Appointment retrieved successfully.',
-})
-@UseGuards(AuthGuard)
-@Roles(UserRole.PATIENT)
-async getPatientAppointments(@CurrentUser() user: User) {
-return this.appointmentService.getPatientAppointments(user);
-}
+
+
+
 
 @Get('')
 @ApiOperation({ summary: 'Get appointment with patient' })
@@ -74,24 +79,6 @@ async getAppointmentDetails(
 return this.appointmentService.getAppointmentDetails(user, id);
 }
 
-@Put(':id')
-@ApiOperation({ summary: 'Update appointment' })
-@ApiBody({ type: UpdateAppointmentDto, 
-description: 'Update appointment data' })
-@ApiResponse({
-status: HttpStatus.OK,
-description:
-'Appointment update successfully.',
-})
-@UseGuards(AuthGuard, RolesGuard)
-@Roles(UserRole.DOCTOR, UserRole.PATIENT)
-async updateAppointment(
-@CurrentUser() user: User,
-@Param('id', IsValidUUIDPipe) id: string,
-@Body() updateAppointmentDto: UpdateAppointmentDto,
-) {
-return this.appointmentService.updateAppointment(user, id, updateAppointmentDto);
-}
 
 @Put('reschedule/:id')
 @ApiOperation({ summary: 'Reschedule appointment' })
@@ -103,19 +90,21 @@ description:
 @UseGuards(AuthGuard, RolesGuard)
 @Roles(UserRole.ADMIN, UserRole.PATIENT)
 async rescheduleAppointment(
-@Param('id', IsValidUUIDPipe) appointmentId: string, @Body('newSlotId') newSlotId: string) {
-return this.appointmentService.rescheduleAppointment(appointmentId, newSlotId);
+@CurrentUser() user: User,
+@Param('id', IsValidUUIDPipe) id: string, 
+@Body() data: RescheduleAppointmentDto) {
+return this.appointmentService.rescheduleAppointment(user, id, data);
 }
 
-@Delete(':id')
-@ApiOperation({ summary: 'Delete appointment' })
+@Patch('cancel/:id')
+@ApiOperation({ summary: 'Cancel appointment' })
 @ApiResponse({
 status: HttpStatus.OK,
 description:
-'Appointment deleted successfully.',
+'Appointment Cancel successfully.',
 })
 @UseGuards(AuthGuard, RolesGuard)
-@Roles(UserRole.ADMIN, UserRole.PATIENT)
+@Roles(UserRole.PATIENT)
 async cancelAppointment(
 @CurrentUser() user: User,
 @Param('id', IsValidUUIDPipe ) id: string) {

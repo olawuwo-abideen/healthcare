@@ -6,10 +6,12 @@ ManyToOne,
 CreateDateColumn,
 UpdateDateColumn,
 DeleteDateColumn,
+OneToMany,
 } from 'typeorm';
 import { User } from './user.entity';
 import { AvailabilitySlot } from './availabilityslot.entity';
 import { Exclude } from 'class-transformer';
+import { Transaction } from './transaction.entity';
 
 export enum AppointmentStatus {
 PENDING = 'pending',
@@ -26,14 +28,18 @@ id: string;
 @ManyToOne(() => User, (user) => user.appointments)
 user: User;
 
-@ManyToOne(() => User, (user) => user.appointments)
-doctor: User;
+// @ManyToOne(() => User, (user) => user.appointments)
+// doctor: User;
 
 @ManyToOne(() => AvailabilitySlot, { eager: true })
 availabilitySlot: AvailabilitySlot;
 
 @Column({ type: 'enum', enum: AppointmentStatus, default: AppointmentStatus.PENDING })
 status: AppointmentStatus;
+
+@OneToMany(() => Transaction, (transaction) => transaction.appointment)
+transactions: Transaction[];
+
 
 @CreateDateColumn({
 name: 'created_at',

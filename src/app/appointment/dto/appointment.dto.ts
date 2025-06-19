@@ -1,40 +1,27 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsUUID } from 'class-validator';
+import { IsString, IsUUID } from 'class-validator';
 
 
 
 export class BookAppointmentDto {
-@ApiProperty({
-description: 'doctorId',
-example: '3f7f541f-e17d-4254-8370-c803b671beb7',
-})
-@IsUUID()
-doctorId: string;
-
-
 @ApiProperty({
 description: 'availabilitySlotId',
 example: '3f7f541f-e17d-4254-8370-c803b671beb7',
 })
 @IsUUID()
 availabilitySlotId: string;
+
+
+@IsString()
+paymentMethodId: string;
 }
 
 
-export class UpdateAppointmentDto {
-
-@ApiProperty({
-description: 'doctorId',
-example: '3f7f541f-e17d-4254-8370-c803b671beb7',
-})
-@IsUUID()
-doctorId?: string;
-
+export class RescheduleAppointmentDto {
 @ApiProperty({
 description: 'availabilitySlotId',
 example: '3f7f541f-e17d-4254-8370-c803b671beb7',
 })
 @IsUUID()
-availabilitySlotId?: string;
+newAvailabilitySlotId: string;
 }
-

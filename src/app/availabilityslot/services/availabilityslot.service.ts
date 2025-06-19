@@ -22,6 +22,7 @@
   user: { id: user.id }, 
   startTime: data.startTime,
   endTime: data.endTime,
+   amount: data.amount,
   isAvailable: data.isAvailable,
   });
 

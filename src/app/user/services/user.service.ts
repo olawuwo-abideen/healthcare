@@ -138,7 +138,7 @@ export class UserService {
     return {
       message: 'Profile updated successfully',
       user,
-    };
+    }
   }
   
   public async updateUserImage(
